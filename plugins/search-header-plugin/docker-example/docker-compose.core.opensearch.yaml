@@ -7,7 +7,6 @@
 # https://docs.camunda.io/docs/self-managed/platform-deployment/helm-kubernetes/guides/local-kubernetes-cluster/
 
 # This is a lightweight configuration with Zeebe, Operate, Tasklist, and OpenSearch
-# See docker-compose.yml for a configuration that also includes Optimize, Identity, and Keycloak.
 
 services:
   
@@ -18,7 +17,7 @@ services:
     command: [ "sysctl", "-w", "vm.max_map_count=262144" ]
 
   zeebe: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#zeebe
-    image: camunda/zeebe:local # change me after release
+    image: camunda/zeebe:${CAMUNDA_PLATFORM_VERSION} # change me after release
     container_name: zeebe
     ports:
       - "26500:26500"
@@ -54,7 +53,7 @@ services:
       - opensearch
 
   operate: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#operate
-    image: camunda/operate:local # change me after release
+    image: camunda/operate:${CAMUNDA_PLATFORM_VERSION} # change me after release
     container_name: operate
     ports:
       - "8081:8080"
@@ -89,7 +88,7 @@ services:
       - opensearch
 
   tasklist: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#tasklist
-    image: camunda/tasklist:local # change me after release
+    image: camunda/tasklist:${CAMUNDA_PLATFORM_VERSION} # change me after release
     container_name: tasklist
     ports:
       - "8082:8080"
@@ -125,7 +124,7 @@ services:
       - opensearch
 
   connectors: # https://docs.camunda.io/docs/components/integration-framework/connectors/out-of-the-box-connectors/available-connectors-overview/
-    image: camunda/connectors-bundle:8.5.5
+    image: camunda/connectors-bundle:${CAMUNDA_CONNECTORS_VERSION}
     container_name: connectors
     ports:
       - "8085:8080"
@@ -150,7 +149,7 @@ services:
       - operate
 
   opensearch:
-    image: opensearchproject/opensearch:2.16.0
+    image: opensearchproject/opensearch:${OPENSEARCH_VERSION}
     container_name: opensearch
     depends_on:
       - opensearch-init

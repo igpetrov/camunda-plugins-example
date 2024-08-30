@@ -7,12 +7,11 @@
 # https://docs.camunda.io/docs/self-managed/platform-deployment/helm-kubernetes/guides/local-kubernetes-cluster/
 
 # This is a lightweight configuration with Zeebe, Operate, Tasklist, and Elasticsearch
-# See docker-compose.yml for a configuration that also includes Optimize, Identity, and Keycloak.
 
 services:
 
   zeebe: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#zeebe
-    image: camunda/zeebe:local # change me after release
+    image: camunda/zeebe:${CAMUNDA_PLATFORM_VERSION}
     container_name: zeebe
     ports:
       - "26500:26500"
@@ -48,7 +47,7 @@ services:
       - elasticsearch
 
   operate: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#operate
-    image: camunda/operate:local # change me after release
+    image: camunda/operate:${CAMUNDA_PLATFORM_VERSION}
     container_name: operate
     ports:
       - "8081:8080"
@@ -82,7 +81,7 @@ services:
       - elasticsearch
 
   tasklist: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#tasklist
-    image: camunda/tasklist:local # change me after release
+    image: camunda/tasklist:${CAMUNDA_PLATFORM_VERSION}
     container_name: tasklist
     ports:
       - "8082:8080"
@@ -117,7 +116,7 @@ services:
       - elasticsearch
 
   connectors: # https://docs.camunda.io/docs/components/integration-framework/connectors/out-of-the-box-connectors/available-connectors-overview/
-    image: camunda/connectors-bundle:8.5.5
+    image: camunda/connectors-bundle:${CAMUNDA_CONNECTORS_VERSION}
     container_name: connectors
     ports:
       - "8085:8080"
@@ -142,7 +141,7 @@ services:
       - operate
 
   elasticsearch: # https://hub.docker.com/_/elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
     container_name: elasticsearch
     ports:
       - "9200:9200"
@@ -170,7 +169,7 @@ services:
       - camunda-platform
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.15.0
+    image: docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}
     container_name: kibana
     ports:
       - 5601:5601
